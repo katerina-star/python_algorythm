@@ -1,56 +1,32 @@
 """
-Задание 7.
-Задание на закрепление навыков работы с деком
+7.	Напишите программу, доказывающую или проверяющую, что для множества
+натуральных чисел выполняется равенство: 1+2+...+n = n(n+1)/2,
+где n - любое натуральное число.
+Рекурсия вам нужна для решения левой части выражения.
+Полученный результат нужно просто сравнить с результатом в правой.
 
-В рассмотренном на уроке листинге есть один недостаток
-Приведенный код способен "обработать" только строку без пробелов, например, 'топот'
+Пример:
+для n = 5
+1+2+3+4+5 = 5(5+1)/2
 
-Но могут быть и такие палиндромы, как 'молоко делили ледоколом'
+Подсказка:
+В ф-цию принимаются два элемент - это левая и правая части
 
-Вам нужно доработать программу так, чтобы она могла выполнить проверку на палиндром
-и в таких строках (включающих пробелы)
+Решите через рекурсию. Решение через цикл не принимается.
+Для оценки Отлично в этом блоке необходимо выполнить 5 заданий из 7
 """
 
-class DequeClass:
-    def __init__(self):
-        self.elems = []
 
-    def is_empty(self):
-        return self.elems == []
-
-    def add_to_front(self, elem):
-        self.elems.append(elem)
-
-    def add_to_rear(self, elem):
-        self.elems.insert(0, elem)
-
-    def remove_from_front(self):
-        return self.elems.pop()
-
-    def remove_from_rear(self):
-        return self.elems.pop(0)
-
-    def size(self):
-        return len(self.elems)
+def recursion(num):
+    if num == 1:
+        return num
+    else:
+        return recursion(num - 1) + num
 
 
-def pal_checker(string):
-    string = string.replace(' ', '')
-    dc_obj = DequeClass()
-
-    for el in string:
-        dc_obj.add_to_rear(el)
-
-    still_equal = True
-
-    while dc_obj.size() > 1 and still_equal:
-        first = dc_obj.remove_from_front()
-        last = dc_obj.remove_from_rear()
-        if first != last:
-            still_equal = False
-
-    return still_equal
-
-
-print(pal_checker("топот"))
-print(pal_checker('молоко делили ледоколом'))
+try:
+    num = int(input('Введите число: '))
+    if recursion(num) == num * (num + 1) / 2:
+        print('Равенство верно')
+except ValueError:
+    print('Ввведите число, а не строку')
